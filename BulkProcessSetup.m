@@ -20,13 +20,22 @@
 
 % Parameters for processing
 originalPath = pwd;
-filesPath = uigetdir('C:\Users\cleme\Desktop\photos', 'Path where matfiles are stored'); % We choose the main folder path using the GUI
+filesPath = uigetdir(pwd, 'Main path where folders with photos are stored (01_RAWphotos)'); % We choose the main folder path using the GUI
+configPath = uigetdir(pwd, 'Path where configuration folders are stored (02_GeneralConfig)'); % We choose the main folder path using the GUI
+OutputPath = fullfile(filesPath,'..','99_ReadyToRun');
 content = dir(filesPath);
 dfolders = content([content(:).isdir]);
 dfolders = dfolders(~ismember({dfolders(:).name},{'.','..'})); % From the content inside the main folder we keep only the path of subfolders
 
 
 %% Renaming process
+
+if ~exist(OutputPath, 'dir')
+    
+    mkdir(OutputPath)
+    
+end
+
 
 % For each subfolder we enter and change the name of the files inside
 for fid = 1 :length(dfolders)
@@ -40,7 +49,8 @@ for fid = 1 :length(dfolders)
     for id = 1:length(filenames)
 
         f = filenames(id).name;
-
+        [~, subfolder] = fileparts(filenames(fid).folder);
+        
         disp(f)
 
         if strcmp(f(1:3), 'LFT')
@@ -74,8 +84,16 @@ for fid = 1 :length(dfolders)
         end
 
     end
+    
+    % Move all photos to the output folder
+    movefile(fullfile(dfolders(fid).folder, dfolders(fid).name, '*.jpg'), fullfile(OutputPath, subfolder, '100MEDIA'))
+    
+    % Copy necessary Metashape-configuration files to the output folder as well
+    
+    copyfile(fullfile(configPath, '*'), fullfile(OutputPath, subfolder))
 
 end
 
 % We come back to the original folder
 cd(originalPath)
+disp('All files are ready to run')
