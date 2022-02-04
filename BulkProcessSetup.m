@@ -48,6 +48,7 @@ for fid = 1 :length(dfolders)
     
     for id = 1:length(filenames)
 
+        % Extract necessary information from files
         f = filenames(id).name;
         [~, subfolder] = fileparts(filenames(fid).folder);
         
@@ -96,4 +97,6 @@ end
 
 % We come back to the original folder
 cd(originalPath)
+
+% The end
 disp('All files are ready to run')
