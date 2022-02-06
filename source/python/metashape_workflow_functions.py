@@ -142,6 +142,7 @@ def enable_and_log_gpu(log_file):
         if gpustring != '': gpustring = gpustring+', '
         gpustring = gpustring+gpustringraw.split("name': '")[currentgpu].split("',")[0]
         currentgpu = currentgpu+1
+
     #gpustring = gpustringraw.split("name': '")[1].split("',")[0]
     gpu_mask = Metashape.app.gpu_mask
 
@@ -234,9 +235,9 @@ def add_gcps(doc, cfg):
 
     for line in content:
         marker_label, camera_label, x_proj, y_proj = line.split(",")
-        if marker_label[0] == '"': # if it's in quotes (from saving CSV in Excel), remove quotes
-            marker_label = marker_label[1:-1]  # need to get it out of the two pairs of quotes
-        if camera_label[0] == '"':  # if it's in quotes (from saving CSV in Excel), remove quotes
+        if marker_label[0] == '"':              # if it's in quotes (from saving CSV in Excel), remove quotes
+            marker_label = marker_label[1:-1]   # need to get it out of the two pairs of quotes
+        if camera_label[0] == '"':              # if it's in quotes (from saving CSV in Excel), remove quotes
             camera_label = camera_label[1:-1]
 
         marker = get_marker(doc.chunk, marker_label)
@@ -260,8 +261,8 @@ def add_gcps(doc, cfg):
 
     for line in content:
         marker_label, world_x, world_y, world_z = line.split(",")
-        if marker_label[0] == '"':  # if it's in quotes (from saving CSV in Excel), remove quotes
-            marker_label = marker_label[1:-1]  # need to get it out of the two pairs of quotes
+        if marker_label[0] == '"':              # if it's in quotes (from saving CSV in Excel), remove quotes
+            marker_label = marker_label[1:-1]   # need to get it out of the two pairs of quotes
 
         marker = get_marker(doc.chunk, marker_label)
         if not marker:
@@ -308,6 +309,31 @@ def align_photos(doc, log_file, cfg):
 
     return True
 
+def importReference(doc, cfg):
+    '''
+    Imports a reference system already set for a project with the same markers and local coordinate system
+
+    '''
+
+    #crs = Metashape.CoordinateSystem('LOCAL_CS["Local Coordinates (m)",LOCAL_DATUM["Local Datum",0],UNIT["metre",1,AUTHORITY["EPSG","9001"]]]')
+    
+    print('changing reference to local coordinates')
+    doc.chunk.crs = Metashape.CoordinateSystem(cfg["project_crs"])
+    doc.chunk.marker_crs = Metashape.CoordinateSystem(cfg["project_crs"])
+    
+    print('Detecting markers')
+    doc.chunk.detectMarkers(tolerance=30, filter_mask=False)
+    
+    doc.save()
+
+    print('Importing reference system')
+    
+    doc.chunk.importReference(path=cfg["reference_path"], format=cfg["importMarkers"]["format"], delimiter=cfg["importMarkers"]["delimiter"], create_markers=False, columns='nxyz')
+    
+    print('todo listo')
+
+    doc.save()
+    return True
 
 def reset_region(doc):
     '''
@@ -522,6 +548,8 @@ def build_dem(doc, log_file, run_id, cfg):
     projection = Metashape.OrthoProjection()
     projection.crs = Metashape.CoordinateSystem(cfg["project_crs"])
 
+    print(projection.crs)
+    
     #prepping params for export
     compression = Metashape.ImageCompression()
     compression.tiff_big = cfg["buildDem"]["tiff_big"]
@@ -543,7 +571,6 @@ def build_dem(doc, log_file, run_id, cfg):
     if (cfg["buildDem"]["type"] == "DTM") | (cfg["buildDem"]["type"] == "both"):
         # call with classes argument
         doc.chunk.buildDem(source_data = Metashape.DenseCloudData,
-                           classes = Metashape.PointClass.Ground,
                            subdivide_task = cfg["subdivide_task"],
                            projection = projection)
         output_file = os.path.join(cfg["output_path"], run_id + '_dtm.tif')
@@ -657,6 +684,7 @@ def build_orthomosaics(doc, log_file, run_id, cfg):
                                crs=crs,
                                raster_type=Metashape.ElevationData)
         build_export_orthomosaic(doc, log_file, run_id, cfg, file_ending = "USGS")
+
     # Otherwise use Metashape point cloud to build elevation model
     # DTM: use ground points only
     if (cfg["buildOrthomosaic"]["surface"] == "DTM") | (cfg["buildOrthomosaic"]["surface"] == "DTMandDSM"):
@@ -665,6 +693,7 @@ def build_orthomosaics(doc, log_file, run_id, cfg):
                            subdivide_task=cfg["subdivide_task"],
                            projection=projection)
         build_export_orthomosaic(doc, log_file, run_id, cfg, file_ending = "dtm")
+        
     # DSM: use all point classes
     if (cfg["buildOrthomosaic"]["surface"] == "DSM") | (cfg["buildOrthomosaic"]["surface"] == "DTMandDSM"):
         doc.chunk.buildDem(source_data = Metashape.DenseCloudData,

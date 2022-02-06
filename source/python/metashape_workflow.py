@@ -15,10 +15,10 @@ manual_config_file = "config/example_dev.yml"
 
 
 ## Load custom modules and config file: slightly different depending whether running interactively or via command line
-try:  # running interactively (in linux) or command line (windows)
+try:        # running interactively (in linux) or command line (windows)
     from python import metashape_workflow_functions as meta
     from python import read_yaml
-except:  # running from command line (in linux) or interactively (windows)
+except:     # running from command line (in linux) or interactively (windows)
     import metashape_workflow_functions as meta
     import read_yaml
 
@@ -53,6 +53,10 @@ if cfg["filterPointsUSGS"]["enabled"]:
 if cfg["addGCPs"]["enabled"]:
     meta.add_gcps(doc, cfg)
     meta.reset_region(doc)
+
+if cfg["importMarkers"]["enabled"]:
+    print('Entered')
+    meta.importReference(doc, cfg)
 
 if cfg["optimizeCameras"]["enabled"]:
     meta.optimize_cameras(doc, cfg)
