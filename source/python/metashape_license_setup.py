@@ -9,7 +9,7 @@ Created on Wed Oct 16 14:37:07 2019
 import os
 from pathlib import Path
 
-license_path = "C:\\Program Files\\Agisoft\\Metashape Pro\\metashape_trial.lic"
+license_path = "C:\\Program Files\\Agisoft\\Metashape Pro\\metashape.lic"
 
 cwd = "".join([os.getcwd(),"/metashape.lic"])
 cwd_path = Path(cwd)

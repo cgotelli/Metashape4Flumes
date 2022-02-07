@@ -9,16 +9,16 @@ load_project: "" #"C:/Users/EPFL-LHE/Documents/GitHub/Metashape-BulkProcess/Test
 
 # The path to the directory of flight photos
 # If there are multiple photo folders, set path to the folder that contains all the photo folders
-photo_path: "C:/Users/EPFL-LHE/Documents/GitHub/Metashape-BulkProcess/TestFiles/01_RAWphotos/test01"
+photo_path: "D:/SfM/RAW/photos/test01"
 multispectral: False # Is this a multispectral photo set? If RGB, set to False.
 
-reference_path: "C:/Users/EPFL-LHE/Documents/GitHub/Metashape-BulkProcess/TestFiles/99_ReadyToRun/referenceMarkers.txt"
+reference_path: "D:/SfM/RAW/config_common/referenceMarkers.txt"
 
 # Path for exports (e.g., points, DSM, orthomosaic) and processing log. Will be created if does not exist.
-output_path: "C:/Users/EPFL-LHE/Documents/GitHub/Metashape-BulkProcess/TestFiles/99_Results/test01/output"
+output_path: "D:/SfM/PROCESSED/output"
 
 # Path to save Metashape project file (.psx). Will be created if does not exist
-project_path: "C:/Users/EPFL-LHE/Documents/GitHub/Metashape-BulkProcess/TestFiles/99_Results/test01"
+project_path: "D:/SfM/PROCESSED/project_files"
 
 # The identifier for the run. Will be used in naming output files. Recommended to include a photoset name and processing parameter set name.
 run_name: "halle0001"
