@@ -172,7 +172,9 @@ def add_photos(doc, cfg):
     '''
 
     ## Get paths to all the project photos
-    a = glob.iglob(os.path.join(cfg["photo_path"],"**","*.*"), recursive=True)   #(([jJ][pP][gG])|([tT][iI][fF]))
+    print(os.path.join(cfg["main_path"],cfg["subFolder"],"**","*.*"))
+    a = glob.iglob(os.path.join(cfg["main_path"],cfg["subFolder"],"**","*.*"), recursive=True)   #(([jJ][pP][gG])|([tT][iI][fF]))
+    print(a)
     b = [path for path in a]
     photo_files = [x for x in b if (re.search("(.tif$)|(.jpg$)|(.TIF$)|(.JPG$)",x) and (not re.search("dem_usgs.tif",x)))]
 
@@ -188,7 +190,7 @@ def add_photos(doc, cfg):
     for camera in doc.chunk.cameras:
         path = camera.photo.path
         # remove the base imagery dir from this string
-        rel_path = path.replace(cfg["photo_path"],"")
+        rel_path = path.replace(os.path.join(cfg["main_path"],cfg["subFolder"]),"")
         # if it starts with a '/', remove it
         newlabel = re.sub("^/","",rel_path)
         camera.label = newlabel
@@ -213,7 +215,7 @@ def add_photos(doc, cfg):
 def calibrate_reflectance(doc, cfg):
     # TODO: Handle failure to find panels, or mulitple panel images by returning error to user.
     doc.chunk.locateReflectancePanels()
-    doc.chunk.loadReflectancePanelCalibration(os.path.join(cfg["photo_path"],"calibration",cfg["calibrateReflectance"]["panel_filename"]))
+    doc.chunk.loadReflectancePanelCalibration(os.path.join(cfg["main_path"],"calibration",cfg["calibrateReflectance"]["panel_filename"]))
     # doc.chunk.calibrateReflectance(use_reflectance_panels=True,use_sun_sensor=True)
     doc.chunk.calibrateReflectance(use_reflectance_panels=cfg["calibrateReflectance"]["use_reflectance_panels"],
                                    use_sun_sensor=cfg["calibrateReflectance"]["use_sun_sensor"])
@@ -229,7 +231,7 @@ def add_gcps(doc, cfg):
     '''
 
     ## Tag specific pixels in specific images where GCPs are located
-    path = os.path.join(cfg["photo_path"], "gcps", "prepared", "gcp_imagecoords_table.csv")
+    path = os.path.join(cfg["main_path"], cfg["subFolder"], "gcps", "prepared", "gcp_imagecoords_table.csv")
     file = open(path)
     content = file.read().splitlines()
 
@@ -254,7 +256,7 @@ def add_gcps(doc, cfg):
 
 
     ## Assign real-world coordinates to each GCP
-    path = os.path.join(cfg["photo_path"], "gcps", "prepared", "gcp_table.csv")
+    path = os.path.join(cfg["main_path"],cfg["subFolder"], "gcps", "prepared", "gcp_table.csv")
 
     file = open(path)
     content = file.read().splitlines()
@@ -329,7 +331,7 @@ def importReference(doc, cfg):
 
     print('Importing reference system')
     
-    doc.chunk.importReference(path=cfg["reference_path"], format=cfg["importMarkers"]["format"], delimiter=cfg["importMarkers"]["delimiter"], create_markers=False, columns='nxyz')
+    doc.chunk.importReference(path=os.path.join(cfg["main_path"],cfg["subFolder"]), format=cfg["importMarkers"]["format"], delimiter=cfg["importMarkers"]["delimiter"], create_markers=False, columns='nxyz')
     doc.chunk.updateTransform()
     print('todo listo')
 
