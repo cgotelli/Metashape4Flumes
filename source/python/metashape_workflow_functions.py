@@ -292,7 +292,8 @@ def align_photos(doc, log_file, cfg):
 
     # Align cameras
     doc.chunk.matchPhotos(downscale=cfg["alignPhotos"]["downscale"],
-                          subdivide_task = cfg["subdivide_task"])
+                          subdivide_task = cfg["subdivide_task"],
+                          reference_preselection_mode = cfg["alignPhotos"]["preselectionMode"])
     doc.chunk.alignCameras(adaptive_fitting=cfg["alignPhotos"]["adaptive_fitting"],
                            subdivide_task = cfg["subdivide_task"])
     doc.save()
@@ -329,7 +330,7 @@ def importReference(doc, cfg):
     print('Importing reference system')
     
     doc.chunk.importReference(path=cfg["reference_path"], format=cfg["importMarkers"]["format"], delimiter=cfg["importMarkers"]["delimiter"], create_markers=False, columns='nxyz')
-    
+    doc.chunk.updateTransform()
     print('todo listo')
 
     doc.save()
@@ -471,7 +472,7 @@ def build_dense_cloud(doc, log_file, run_id, cfg):
     doc.chunk.buildDenseCloud(max_neighbors=cfg["buildDenseCloud"]["max_neighbors"],
                               keep_depth = cfg["buildDenseCloud"]["keep_depth"],
                               subdivide_task = cfg["subdivide_task"],
-                              point_colors = True)
+                              point_colors = False)
     doc.save()
 
     # get an ending time stamp for the previous step
@@ -567,7 +568,8 @@ def build_dem(doc, log_file, run_id, cfg):
                                    projection=projection,
                                    nodata_value=cfg["buildDem"]["nodata"],
                                    source_data=Metashape.ElevationData,
-                                   image_compression=compression)
+                                   image_compression=compression,
+                                   clip_to_boundary=cfg["buildDem"]["clip_to_boundary"])
     if (cfg["buildDem"]["type"] == "DTM") | (cfg["buildDem"]["type"] == "both"):
         # call with classes argument
         doc.chunk.buildDem(source_data = Metashape.DenseCloudData,
@@ -579,7 +581,8 @@ def build_dem(doc, log_file, run_id, cfg):
                                    projection=projection,
                                    nodata_value=cfg["buildDem"]["nodata"],
                                    source_data=Metashape.ElevationData,
-                                   image_compression=compression)
+                                   image_compression=compression,
+                                   clip_to_boundary=cfg["buildDem"]["clip_to_boundary"])
     if (cfg["buildDem"]["type"] != "DTM") & (cfg["buildDem"]["type"] == "both") & (cfg["buildDem"]["type"] == "DSM"):
         raise ValueError("DEM type must be either 'DSM' or 'DTM' or 'both'")
 
@@ -602,8 +605,6 @@ def export_orthomosaic(doc, log_file, run_id, cfg):
     '''
     Export orthomosaic
     '''
-
-
 
     return True
 
@@ -734,6 +735,48 @@ def finish_run(log_file,config_file):
         file.write("\n\n### CONFIGURATION ###\n")
         documents = yaml.dump(config_full,file, default_flow_style=False)
         file.write("### END CONFIGURATION ###\n")
+
+
+    return True
+
+def SetBoundary(doc, cfg):
+    if cfg["buildDem"]["boundaryMode"] == "Markers":
+        print("Boundary mode with Markers.")
+
+
+
+        #chunk = Metashape.app.document.chunk
+        T = doc.chunk.transform.matrix
+        crs = doc.chunk.crs
+        if not doc.chunk.shapes:
+            doc.chunk.shapes = Metashape.Shapes()
+            doc.chunk.shapes.crs = doc.chunk.crs
+
+        shape = doc.chunk.shapes.addShape()
+        shape.label = "boundary"
+        shape.type = Metashape.Shape.Polygon
+        shape.boundary_type = Metashape.Shape.BoundaryType.OuterBoundary
+
+        coords = [crs.project(T.mulp(marker.position)) for marker in doc.chunk.markers]
+        shape.vertices = [Metashape.Vector([coord.x, coord.y]) for coord in coords]
+
+
+
+
+
+
+
+
+
+
+    elif cfg["buildDem"]["boundaryMode"] == "Shape":
+        print("Boundary mode with Shape.")
+
+        doc.chunk.importShapes(cfg["buildDem"]["boundary_path"], boundary_type= Metashape.Shape.OuterBoundary)
+
+    else:
+        print("The boundary was not properly set.")
+
 
 
     return True

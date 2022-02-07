@@ -69,6 +69,9 @@ if cfg["filterPointsUSGS"]["enabled"]:
 if cfg["buildDenseCloud"]["enabled"]:
     meta.build_dense_cloud(doc, log, run_id, cfg)
 
+if cfg["buildDem"]["clip_to_boundary"]:
+    meta.SetBoundary(doc, cfg)
+
 if cfg["buildDem"]["enabled"]:
     meta.build_dem(doc, log, run_id, cfg)
 
