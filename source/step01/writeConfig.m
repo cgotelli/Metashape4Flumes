@@ -1,4 +1,4 @@
-function writeConfig(filein, fileout, subfolder, photoPath)
+function writeConfig(filein, fileout, subfolder, photoPath, outputPath, projectPath)
 %WRITECONFIG Summary of this function goes here
 %   Detailed explanation goes here
 % fileID_in = fileread('D:\SfM\RAW\config_common\halle_config_working.yml');
@@ -14,6 +14,12 @@ while true
         i = i+1;
     elseif i == 2
         fprintf(outfid, strcat("subFolder: ", '"', subfolder, '"', '\n') );  %the text you are adding at the beginning\
+        i = i+1;
+    elseif i == 3
+        fprintf(outfid, strcat("output_path: ", '"', strrep(outputPath,"\","/"), '"', '\n') );  %the text you are adding at the beginning\
+        i = i+1;
+    elseif i == 4
+        fprintf(outfid, strcat("project_path: ", '"', strrep(projectPath,"\","/"), '"', '\n') );  %the text you are adding at the beginning\
         i = i+1;
     else
         thisline = fgetl(infid);    %read line from input file

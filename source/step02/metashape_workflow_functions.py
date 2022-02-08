@@ -78,7 +78,7 @@ def project_setup(cfg):
 
     ## Project file example to make: "projectID_YYYYMMDDtHHMM-jobID.psx"
     timestamp = stamp_time()
-    run_id = "_".join([run_name,timestamp])
+    run_id = "_".join([run_name,cfg["subFolder"],timestamp])
     # TODO: If there is a slurm JobID, append to time (separated with "-", not "_"). This will keep jobs initiated in the same minute distinct
 
     project_file = os.path.join(cfg["project_path"], '.'.join([run_id, 'psx']) )
@@ -331,7 +331,7 @@ def importReference(doc, cfg):
 
     print('Importing reference system')
     
-    doc.chunk.importReference(path=os.path.join(cfg["main_path"],cfg["subFolder"]), format=cfg["importMarkers"]["format"], delimiter=cfg["importMarkers"]["delimiter"], create_markers=False, columns='nxyz')
+    doc.chunk.importReference(path=os.path.join(cfg["main_path"],cfg["subFolder"],"referenceMarkers.txt"), format=cfg["importMarkers"]["format"], delimiter=cfg["importMarkers"]["delimiter"], create_markers=False, columns='nxyz')
     doc.chunk.updateTransform()
     print('todo listo')
 

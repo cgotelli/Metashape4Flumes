@@ -22,7 +22,10 @@
 originalPath = pwd;
 filesPath = uigetdir(pwd, 'Main path where folders with photos are stored (RAW/photos)'); % We choose the main folder path using the GUI
 configPath = uigetdir(filesPath, 'Path where configuration folders are stored (RAW/config_common)'); % We choose the main folder path using the GUI
-OutputPath = fullfile(filesPath, '..', 'runfiles');
+RunFilesPath = fullfile(filesPath, '..', 'runfiles');
+outputPath = fullfile(filesPath, '..', '..','PROCESSED','output');
+projectPath = fullfile(filesPath, '..', '..','PROCESSED','project_files');
+workflowPath = fullfile(filesPath, '..', '..','CODE','step02');
 content = dir(filesPath);
 dfolders = content([content(:).isdir]);
 dfolders = dfolders(~ismember({dfolders(:).name},{'.','..'})); % From the content inside the main folder we keep only the path of subfolders
@@ -30,9 +33,9 @@ dfolders = dfolders(~ismember({dfolders(:).name},{'.','..'})); % From the conten
 
 %% Renaming process
 
-if ~exist(OutputPath, 'dir')
+if ~exist(RunFilesPath, 'dir')
     
-    mkdir(OutputPath)
+    mkdir(RunFilesPath)
     
 end
 
@@ -87,13 +90,14 @@ for fid = 1 :length(dfolders)
     end
     
     % Move all photos to the output folder
-    movefile(fullfile(dfolders(fid).folder, dfolders(fid).name, '*.jpg'), fullfile(OutputPath, subfolder, '100MEDIA'))
+    movefile(fullfile(dfolders(fid).folder, dfolders(fid).name, '*.jpg'), fullfile(RunFilesPath, subfolder, '100MEDIA'))
     
-    writeConfig(fullfile(configPath, "baseConfig.yml"), fullfile(OutputPath, subfolder, strcat("config_", subfolder,".yml")), subfolder, fullfile(OutputPath))
+    writeConfig(fullfile(configPath, "baseConfig.yml"), fullfile(RunFilesPath, subfolder, strcat("config_", subfolder,".yml")), subfolder, RunFilesPath, outputPath, projectPath)
     
+    writeRunFile(fid, RunFilesPath, fullfile(workflowPath, 'metashape_workflow.py'), fullfile(RunFilesPath, subfolder, strcat("config_", subfolder,".yml")))
     % Copy necessary Metashape-configuration files to the output folder as well
     
-    copyfile(fullfile(configPath, '*'), fullfile(OutputPath, subfolder))
+    copyfile(fullfile(configPath, '*'), fullfile(RunFilesPath, subfolder))
     
 end
 
