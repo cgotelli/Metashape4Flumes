@@ -2,7 +2,7 @@
 
 **MetashapeForFlumes** is a set of codes made for automatize the serial . Currently, the files for running the Metashape projects are built with Matlab.  
 
-This code is based on the [ucdavis/metashape](https://github.com/ucdavis/metashape)
+This code is based on the [ucdavis/metashape](https://github.com/ucdavis/metashape) repository.
 
 ```
 ├───CODE
