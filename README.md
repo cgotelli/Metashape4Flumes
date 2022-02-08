@@ -1,6 +1,8 @@
-# Metashape-BulkProcess
+# MetashapeForFlumes
 
-La estrctura 
+**MetashapeForFlumes** is a set of codes made for automatize the serial . Currently, the files for running the Metashape projects are built with Matlab.  
+
+This code is based on the [ucdavis/metashape](https://github.com/ucdavis/metashape)
 
 ```
 ├───CODE
@@ -15,9 +17,9 @@ La estrctura
 │           metashape_workflow_functions.py
 │           read_yaml.py
 │
-├───PROCESSED
-│   ├───output
-│   └───project_files
+├───PROCESSED*
+│   ├───output*
+│   └───project_files*
 └───RAW
     ├───config_common
     │       baseConfig.yml
@@ -26,11 +28,17 @@ La estrctura
     │
     └───photos
         ├───scan01
+		photo001.jpg
+		photo002.jpg
+		...
         ├───scan02
+		photo001.jpg
+		photo002.jpg
+		...
         └───scan03
-		.
-		.
-		.
-	└───scan##
+		photo001.jpg
+		photo002.jpg
+		...
+	...
         
 ```
