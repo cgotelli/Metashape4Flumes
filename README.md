@@ -6,7 +6,7 @@ This code is based on the [ucdavis/metashape](https://github.com/ucdavis/metasha
 
 ## File structure of the code 
 
-The entire process works with 3 main folders: CODE, RAW, and PROCESSED. Below is the file tree with the required files:
+The entire process works with 3 main folders: **CODE**, **RAW**, and **PROCESSED**. Below is the file tree with the required files:
 
 ```
 ├───CODE
@@ -46,5 +46,11 @@ The entire process works with 3 main folders: CODE, RAW, and PROCESSED. Below is
 	...
         
 ```
+
+## Steps for running the code
+
+### Step 1. Setting up the files
+
+### Step 2. Setting up the files
 
 
