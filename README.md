@@ -15,6 +15,9 @@ La estrctura
 │           metashape_workflow_functions.py
 │           read_yaml.py
 │
+├───PROCESSED
+│   ├───output
+│   └───project_files
 └───RAW
     ├───config_common
     │       baseConfig.yml
@@ -22,12 +25,12 @@ La estrctura
     │       referenceMarkers.txt
     │
     └───photos
-    	├───scan01
-	├───scan02
+        ├───scan01
+        ├───scan02
+        └───scan03
 		.
 		.
 		.
 	└───scan##
-        	
-
+        
 ```
