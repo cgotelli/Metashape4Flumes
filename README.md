@@ -1,4 +1,4 @@
-# MetashapeForFlumes
+# Metashape for Flumes
 
 **MetashapeForFlumes** is a set of codes made for automatize the serial . Currently, the files for running the Metashape projects are built with Matlab.  
 
