@@ -629,7 +629,8 @@ def build_export_orthomosaic(doc, log_file, run_id, cfg, file_ending):
                                fill_holes=cfg["buildOrthomosaic"]["fill_holes"],
                                refine_seamlines=cfg["buildOrthomosaic"]["refine_seamlines"],
                                subdivide_task=cfg["subdivide_task"],
-                               projection=projection)
+                               projection=projection,
+                               resolution=cfg["buildOrthomosaic"]["resolution"])
 
     doc.save()
 
@@ -649,7 +650,8 @@ def build_export_orthomosaic(doc, log_file, run_id, cfg, file_ending):
                                projection=projection,
                                nodata_value=cfg["buildOrthomosaic"]["nodata"],
                                source_data=Metashape.OrthomosaicData,
-                               image_compression=compression)
+                               image_compression=compression,
+                               resolution=cfg["buildOrthomosaic"]["resolution"])
 
     # get an ending time stamp for the previous step
     timer6b = time.time()
@@ -774,7 +776,7 @@ def SetBoundary(doc, cfg):
     elif cfg["buildDem"]["boundaryMode"] == "Shape":
         print("Boundary mode with Shape.")
 
-        doc.chunk.importShapes(cfg["buildDem"]["boundary_path"], boundary_type= Metashape.Shape.OuterBoundary)
+        doc.chunk.importShapes(os.path.join(cfg["main_path"],cfg["subFolder"],'outBoundary.shp'), boundary_type= Metashape.Shape.OuterBoundary)
 
     else:
         print("The boundary was not properly set.")
