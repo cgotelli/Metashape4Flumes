@@ -39,19 +39,8 @@ meta.enable_and_log_gpu(log)
 if cfg["load_project"] == "":  # only add photos if this is a brand new project, not based off an existing project
     meta.add_photos(doc, cfg)
 
-if cfg["calibrateReflectance"]["enabled"]:
-    meta.calibrate_reflectance(doc, cfg)
-
 if cfg["alignPhotos"]["enabled"]:
     meta.align_photos(doc, log, cfg)
-    meta.reset_region(doc)
-
-if cfg["filterPointsUSGS"]["enabled"]:
-    meta.filter_points_usgs_part1(doc, cfg)
-    meta.reset_region(doc)
-
-if cfg["addGCPs"]["enabled"]:
-    meta.add_gcps(doc, cfg)
     meta.reset_region(doc)
 
 if cfg["importMarkers"]["enabled"]:
@@ -60,10 +49,6 @@ if cfg["importMarkers"]["enabled"]:
 
 if cfg["optimizeCameras"]["enabled"]:
     meta.optimize_cameras(doc, cfg)
-    meta.reset_region(doc)
-
-if cfg["filterPointsUSGS"]["enabled"]:
-    meta.filter_points_usgs_part2(doc, cfg)
     meta.reset_region(doc)
 
 if cfg["buildDenseCloud"]["enabled"]:
