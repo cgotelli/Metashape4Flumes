@@ -599,7 +599,7 @@ def finish_run(log_file,config_file):
 
     return True
 
-def SetBoundary(doc, cfg):
+def SetBoundary(doc, cfg): # ADD OPTION FOR SETTING DEM WITH A POLYGON WHICH VERTICES ARE MARKERS.
     if cfg["buildDem"]["boundaryMode"] == "Markers":
         print("Boundary mode with Markers.")
 
