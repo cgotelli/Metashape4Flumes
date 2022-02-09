@@ -99,7 +99,7 @@ def project_setup(cfg):
         # Initialize a chunk, set its CRS as specified
         chunk = doc.addChunk()
         chunk.crs = Metashape.CoordinateSystem(cfg["project_crs"])
-        chunk.marker_crs = Metashape.CoordinateSystem(cfg["addGCPs"]["gcp_crs"])
+        chunk.marker_crs = Metashape.CoordinateSystem(cfg["project_crs"])
 
     # Save doc doc as new project (even if we opened an existing project, save as a separate one so the existing project remains accessible in its original state)
     doc.save(project_file)
@@ -212,76 +212,6 @@ def add_photos(doc, cfg):
     return True
 
 
-def calibrate_reflectance(doc, cfg):
-    # TODO: Handle failure to find panels, or mulitple panel images by returning error to user.
-    doc.chunk.locateReflectancePanels()
-    doc.chunk.loadReflectancePanelCalibration(os.path.join(cfg["main_path"],"calibration",cfg["calibrateReflectance"]["panel_filename"]))
-    # doc.chunk.calibrateReflectance(use_reflectance_panels=True,use_sun_sensor=True)
-    doc.chunk.calibrateReflectance(use_reflectance_panels=cfg["calibrateReflectance"]["use_reflectance_panels"],
-                                   use_sun_sensor=cfg["calibrateReflectance"]["use_sun_sensor"])
-    doc.save()
-
-    return True
-
-
-def add_gcps(doc, cfg):
-    '''
-    Add GCPs (GCP coordinates and the locations of GCPs in individual photos.
-    See the helper script (and the comments therein) for details on how to prepare the data needed by this function: R/prep_gcps.R
-    '''
-
-    ## Tag specific pixels in specific images where GCPs are located
-    path = os.path.join(cfg["main_path"], cfg["subFolder"], "gcps", "prepared", "gcp_imagecoords_table.csv")
-    file = open(path)
-    content = file.read().splitlines()
-
-    for line in content:
-        marker_label, camera_label, x_proj, y_proj = line.split(",")
-        if marker_label[0] == '"':              # if it's in quotes (from saving CSV in Excel), remove quotes
-            marker_label = marker_label[1:-1]   # need to get it out of the two pairs of quotes
-        if camera_label[0] == '"':              # if it's in quotes (from saving CSV in Excel), remove quotes
-            camera_label = camera_label[1:-1]
-
-        marker = get_marker(doc.chunk, marker_label)
-        if not marker:
-            marker = doc.chunk.addMarker()
-            marker.label = marker_label
-
-        camera = get_camera(doc.chunk, camera_label)
-        if not camera:
-            print(camera_label + " camera not found in project")
-            continue
-
-        marker.projections[camera] = Metashape.Marker.Projection((float(x_proj), float(y_proj)), True)
-
-
-    ## Assign real-world coordinates to each GCP
-    path = os.path.join(cfg["main_path"],cfg["subFolder"], "gcps", "prepared", "gcp_table.csv")
-
-    file = open(path)
-    content = file.read().splitlines()
-
-    for line in content:
-        marker_label, world_x, world_y, world_z = line.split(",")
-        if marker_label[0] == '"':              # if it's in quotes (from saving CSV in Excel), remove quotes
-            marker_label = marker_label[1:-1]   # need to get it out of the two pairs of quotes
-
-        marker = get_marker(doc.chunk, marker_label)
-        if not marker:
-            marker = doc.chunk.addMarker()
-            marker.label = marker_label
-
-        marker.reference.location = (float(world_x), float(world_y), float(world_z))
-        marker.reference.accuracy = (cfg["addGCPs"]["marker_location_accuracy"], cfg["addGCPs"]["marker_location_accuracy"], cfg["addGCPs"]["marker_location_accuracy"])
-
-    doc.chunk.marker_location_accuracy = (cfg["addGCPs"]["marker_location_accuracy"],cfg["addGCPs"]["marker_location_accuracy"],cfg["addGCPs"]["marker_location_accuracy"])
-    doc.chunk.marker_projection_accuracy = cfg["addGCPs"]["marker_projection_accuracy"]
-
-    doc.save()
-
-    return True
-
-
 def align_photos(doc, log_file, cfg):
     '''
     Match photos, align cameras, optimize cameras
@@ -355,86 +285,12 @@ def optimize_cameras(doc, cfg):
     '''
     Optimize cameras
     '''
-
-    # Disable camera locations as reference if specified in YML
-    if cfg["addGCPs"]["enabled"] and cfg["addGCPs"]["optimize_w_gcps_only"]:
-        n_cameras = len(doc.chunk.cameras)
-        for i in range(0, n_cameras):
-            doc.chunk.cameras[i].reference.enabled = False
-
+        
     # Currently only optimizes the default parameters, which is not all possible parameters
     doc.chunk.optimizeCameras(adaptive_fitting=cfg["optimizeCameras"]["adaptive_fitting"])
     doc.save()
 
     return True
-
-
-def filter_points_usgs_part1(doc, cfg):
-
-    doc.chunk.optimizeCameras(adaptive_fitting=cfg["optimizeCameras"]["adaptive_fitting"])
-
-    rec_thresh_percent = cfg["filterPointsUSGS"]["rec_thresh_percent"]
-    rec_thresh_absolute = cfg["filterPointsUSGS"]["rec_thresh_absolute"]
-    proj_thresh_percent = cfg["filterPointsUSGS"]["proj_thresh_percent"]
-    proj_thresh_absolute = cfg["filterPointsUSGS"]["proj_thresh_absolute"]
-    reproj_thresh_percent = cfg["filterPointsUSGS"]["reproj_thresh_percent"]
-    reproj_thresh_absolute = cfg["filterPointsUSGS"]["reproj_thresh_absolute"]
-
-    fltr = Metashape.PointCloud.Filter()
-    fltr.init(doc.chunk, Metashape.PointCloud.Filter.ReconstructionUncertainty)
-    values = fltr.values.copy()
-    values.sort()
-    thresh = values[int(len(values) * (1 - rec_thresh_percent / 100))]
-    if thresh < rec_thresh_absolute:
-        thresh = rec_thresh_absolute  # don't throw away too many points if they're all good
-    fltr.removePoints(thresh)
-
-    doc.chunk.optimizeCameras(adaptive_fitting=cfg["optimizeCameras"]["adaptive_fitting"])
-
-    fltr = Metashape.PointCloud.Filter()
-    fltr.init(doc.chunk, Metashape.PointCloud.Filter.ProjectionAccuracy)
-    values = fltr.values.copy()
-    values.sort()
-    thresh = values[int(len(values) * (1- proj_thresh_percent / 100))]
-    if thresh < proj_thresh_absolute:
-        thresh = proj_thresh_absolute  # don't throw away too many points if they're all good
-    fltr.removePoints(thresh)
-
-    doc.chunk.optimizeCameras(adaptive_fitting=cfg["optimizeCameras"]["adaptive_fitting"])
-
-    fltr = Metashape.PointCloud.Filter()
-    fltr.init(doc.chunk, Metashape.PointCloud.Filter.ReprojectionError)
-    values = fltr.values.copy()
-    values.sort()
-    thresh = values[int(len(values) * (1 - reproj_thresh_percent / 100))]
-    if thresh < reproj_thresh_absolute:
-        thresh = reproj_thresh_absolute  # don't throw away too many points if they're all good
-    fltr.removePoints(thresh)
-
-    doc.chunk.optimizeCameras(adaptive_fitting=cfg["optimizeCameras"]["adaptive_fitting"])
-
-    doc.save()
-
-
-def filter_points_usgs_part2(doc, cfg):
-
-    doc.chunk.optimizeCameras(adaptive_fitting=cfg["optimizeCameras"]["adaptive_fitting"])
-
-    reproj_thresh_percent = cfg["filterPointsUSGS"]["reproj_thresh_percent"]
-    reproj_thresh_absolute = cfg["filterPointsUSGS"]["reproj_thresh_absolute"]
-
-    fltr = Metashape.PointCloud.Filter()
-    fltr.init(doc.chunk, Metashape.PointCloud.Filter.ReprojectionError)
-    values = fltr.values.copy()
-    values.sort()
-    thresh = values[int(len(values) * (1 - reproj_thresh_percent / 100))]
-    if thresh < reproj_thresh_absolute:
-        thresh = reproj_thresh_absolute  # don't throw away too many points if they're all good
-    fltr.removePoints(thresh)
-
-    doc.chunk.optimizeCameras(adaptive_fitting=cfg["optimizeCameras"]["adaptive_fitting"])
-
-    doc.save()
 
 
 def build_dense_cloud(doc, log_file, run_id, cfg):
