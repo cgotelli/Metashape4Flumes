@@ -603,29 +603,21 @@ def SetBoundary(doc, cfg): # ADD OPTION FOR SETTING DEM WITH A POLYGON WHICH VER
     if cfg["buildDem"]["boundaryMode"] == "Markers":
         print("Boundary mode with Markers.")
 
-
-
-        #chunk = Metashape.app.document.chunk
+        doc.chunk = Metashape.app.document.chunk
         T = doc.chunk.transform.matrix
-        crs = doc.chunk.crs
+
         if not doc.chunk.shapes:
             doc.chunk.shapes = Metashape.Shapes()
             doc.chunk.shapes.crs = doc.chunk.crs
-
+        
+        crs = doc.chunk.shapes.crs
         shape = doc.chunk.shapes.addShape()
         shape.label = "boundary"
-        shape.type = Metashape.Shape.Polygon
+        shape.geometry.type = Metashape.Geometry.Type.PolygonType
         shape.boundary_type = Metashape.Shape.BoundaryType.OuterBoundary
 
-        coords = [crs.project(T.mulp(marker.position)) for marker in doc.chunk.markers]
-        shape.vertices = [Metashape.Vector([coord.x, coord.y]) for coord in coords]
-
-
-
-
-
-
-
+        coords = [crs.project(T.mulp(marker.position)) for marker in chunk.markers]
+        shape.geometry = Metashape.Geometry.Polygon([Metashape.Vector([coord.x, coord.y]) for coord in coords])
 
 
 
