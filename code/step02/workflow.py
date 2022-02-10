@@ -43,10 +43,6 @@ if cfg["alignPhotos"]["enabled"]:
     meta.align_photos(doc, log, cfg)
     meta.reset_region(doc)
 
-if cfg["importMarkers"]["enabled"]:
-    print('Entered')
-    meta.importReference(doc, cfg)
-
 if cfg["optimizeCameras"]["enabled"]:
     meta.optimize_cameras(doc, cfg)
     meta.reset_region(doc)
@@ -54,6 +50,10 @@ if cfg["optimizeCameras"]["enabled"]:
 if cfg["buildDenseCloud"]["enabled"]:
     meta.build_dense_cloud(doc, log, run_id, cfg)
 
+if cfg["importMarkers"]["enabled"]:
+    print('Entered')
+    meta.importReference(doc, cfg)
+    
 if cfg["buildDem"]["clip_to_boundary"]:
     meta.SetBoundary(doc, cfg)
 
