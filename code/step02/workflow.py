@@ -7,13 +7,6 @@
 
 import sys
 
-# ---- If this is a first run from the standalone python module, need to copy the license file from the full metashape install: from python import metashape_license_setup
-
-## Define where to get the config file (only used if running interactively)
-manual_config_file = "config/example_dev.yml"
-# ---- If not running interactively, the config file should be supplied as the command-line argument after the python script, e.g.: python metashape_workflow.py config.yml
-
-
 ## Load custom modules and config file: slightly different depending whether running interactively or via command line
 try:        # running interactively (in linux) or command line (windows)
     from python import workflow_functions as meta
@@ -22,10 +15,7 @@ except:     # running from command line (in linux) or interactively (windows)
     import workflow_functions as meta
     import read_yaml
 
-if(sys.stdin.isatty()):
-    config_file = sys.argv[1]
-else:
-    config_file = manual_config_file
+config_file = sys.argv[1]
 
 ## Parse the config file
 cfg = read_yaml.read_yaml(config_file)
