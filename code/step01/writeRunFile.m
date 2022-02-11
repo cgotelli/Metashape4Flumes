@@ -1,7 +1,7 @@
 
 function writeRunFile(fid, mainPath, workflowPath, configPath)
 
-% D:\SfM\RAW\runfiles\run.py
+% D:\SfM\CODE\step02\run.py
 if fid == 1
 
     outfid = fopen(fullfile(mainPath, 'run.py'), 'wt');

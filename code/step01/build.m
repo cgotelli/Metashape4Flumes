@@ -94,7 +94,7 @@ for fid = 1 :length(dfolders)
     
     writeConfig(fullfile(configPath, "baseConfig.yml"), fullfile(RunFilesPath, subfolder, strcat("config_", subfolder,".yml")), subfolder, RunFilesPath, outputPath, projectPath)
     
-    writeRunFile(fid, RunFilesPath, fullfile(workflowPath, 'workflow.py'), fullfile(RunFilesPath, subfolder, strcat("config_", subfolder,".yml")))
+    writeRunFile(fid, workflowPath, fullfile(workflowPath, 'workflow.py'), fullfile(RunFilesPath, subfolder, strcat("config_", subfolder,".yml")))
     % Copy necessary Metashape-configuration files to the output folder as well
     
     copyfile(fullfile(configPath, '*'), fullfile(RunFilesPath, subfolder))
