@@ -601,34 +601,47 @@ def finish_run(log_file,config_file):
 
 def SetBoundary(doc, cfg): # ADD OPTION FOR SETTING DEM WITH A POLYGON WHICH VERTICES ARE MARKERS.
     if cfg["buildDem"]["boundaryMode"] == "Markers":
+
         print("Boundary mode with Markers.")
 
-        doc.chunk = Metashape.app.document.chunk
         T = doc.chunk.transform.matrix
+        P = doc.chunk.shapes.projection.matrix
 
         if not doc.chunk.shapes:
             doc.chunk.shapes = Metashape.Shapes()
-            doc.chunk.shapes.crs = doc.chunk.crs
-        
-        crs = doc.chunk.shapes.crs
+            doc.chunk.shapes.crs = Metashape.CoordinateSystem(cfg["project_crs"])
+            #doc.chunk.shapes.crs = doc.chunk.crs
+
+        crs = Metashape.CoordinateSystem(cfg["project_crs"])
+
         shape = doc.chunk.shapes.addShape()
         shape.label = "boundary"
         shape.geometry.type = Metashape.Geometry.Type.PolygonType
         shape.boundary_type = Metashape.Shape.BoundaryType.OuterBoundary
+        
 
-        coords = [crs.project(T.mulp(marker.position)) for marker in chunk.markers]
-        shape.geometry = Metashape.Geometry.Polygon([Metashape.Vector([coord.x, coord.y]) for coord in coords])
+        coords = [P.mulp(crs.project(T.mulp(marker.position))) for marker in doc.chunk.markers]
+        
+        
+        selected_coords = []
+        
+        for i in range(0, 22):
+            selected_coords.append(coords[i])
+        for i in range(43, 21, -1):
+            selected_coords.append(coords[i])
+        
 
-
+        shape.geometry = Metashape.Geometry.Polygon(selected_coords)
+        doc.save()
 
     elif cfg["buildDem"]["boundaryMode"] == "Shape":
-        print("Boundary mode with Shape.")
+        
+        print("Boundary mode with imported Shape.")
 
-        doc.chunk.importShapes(os.path.join(cfg["main_path"],cfg["subFolder"],'outBoundary.shp'), boundary_type= Metashape.Shape.OuterBoundary)
+        doc.chunk.importShapes(os.path.join(cfg["main_path"],cfg["subFolder"],'outBoundary.shp'), boundary_type=Metashape.Shape.OuterBoundary)
 
     else:
+        
         print("The boundary was not properly set.")
-
-
 
     return True
