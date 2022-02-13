@@ -6,7 +6,7 @@ This code is an adaptation of the [ucdavis/metashape](https://github.com/ucdavis
 
 ## File structure of the code 
 
-The entire process works with 3 main folders: **CODE** (where the code is stored), **RAW** (where the photos and other necessary files are stored), and **PROCESSED** (where the project files and chosen outputs are saved). Below is the file tree showing the general file structure:
+The entire process works with 3 subfolders inside one main folder: **CODE** (where the code is stored), **RAW** (where the photos and other necessary files are stored), and **PROCESSED** (where the project files and chosen outputs are saved). Below is the file tree showing the general file structure:
 
 ```
 EXPERIMENT001
@@ -54,9 +54,11 @@ EXPERIMENT001
 
 ## Setup
 
-**Python:** You need Python (3.5, 3.6, 3.7 or 3.8[^1]). [Anaconda distribution](https://www.anaconda.com/distribution/) is recommended because it includes all the required libraries. When installing, if asked whether the installer should initialize Anaconda3, say "yes". Anaconda must be initialized upon install such that `python` can be called from the command line. A way to check is to simply enter `python` at your command prompt (CMD) and see if the resulting header info includes Anaconda and Python 3. If it doesn't, you may still need to initialize your Conda install.
+Before 
 
-**Metashape:** You must install the Metashape Python 3 module (Metashape version 1.8.1). Download the [current \*.whl file](https://www.agisoft.com/downloads/installer/) and install it following [these instructions](https://agisoft.freshdesk.com/support/solutions/articles/31000148930-how-to-install-metashape-stand-alone-python-module) (using the name of the .whl file that you downloaded).
+**Python:** You need Python (any version between 3.5 and 3.8[^1]). [Anaconda distribution](https://www.anaconda.com/distribution/) is recommended because it includes all the required libraries. When installing, if asked whether the installer should initialize Anaconda3, say "yes". Anaconda must be initialized upon install such that `python` can be called from the command line. A way to check is to simply enter `python` at your command prompt (CMD) and see if the resulting header info includes Anaconda and Python 3. If it doesn't, you may still need to initialize your Conda install.
+
+**Metashape:** You must install the Metashape Professional Edition and Metashape Python 3 module (version 1.8.1). Download the [current \*.whl file](https://www.agisoft.com/downloads/installer/) and install it following [these instructions](https://agisoft.freshdesk.com/support/solutions/articles/31000148930-how-to-install-metashape-stand-alone-python-module) (using the name of the .whl file that you downloaded).
 
 **MATLAB[^2]:** Any basic version of Matlab is useful. No extra toolboxes are required.
 
@@ -64,7 +66,7 @@ EXPERIMENT001
 
 ### Step 1. Build
 
-This step uses Matlab[^2] to get the required files and copy them into their correspondent folders. It also creates the `run.py` script, which will allow to process all the scans in different folders/projects.
+This step uses Matlab[^2] to get the required files and copy them into their correspondent subfolders inside the **RAW** folder. It also creates the `run.py` script, which will allow to process all the scans in different folders/projects.
 
 
 #### GCPs and coordinate system
