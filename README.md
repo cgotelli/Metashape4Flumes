@@ -6,7 +6,7 @@ To automatize the process it is necessary to first have one test scan running pr
 
 This code is adapted for being used only in experimental flumes with fixed and known marker positions. For other uses please refer to the repository on which this work is based, the work done on [this repository](https://github.com/ucdavis/metashape).
 
-## Folder's structure 
+## Folders structure 
 
 The entire process works with 3 subfolders inside one main folder: **CODE** (where the code is stored), **RAW** (where the photos and other necessary files are stored), and **PROCESSED** (where the project files and chosen outputs are saved). Below is the file tree showing the general file structure:
 
