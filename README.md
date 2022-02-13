@@ -1,6 +1,6 @@
 # Metashape for Flumes
 
-**MetashapeForFlumes** is a code made for processing several sets of images of laboratory flumes and making a reconstruction of their topography using [Metashape Professional Python 3 Module](https://www.agisoft.com/features/professional-edition/). The code helps automatize the serial processing of different scans of the same experimental setup when you want to compare DEMs or Orthophotos in time.
+**MetashapeForFlumes** is a code made for processing several sets of images of laboratory flumes and making a reconstruction of their topography using [Metashape Professional Python 3 Module](https://www.agisoft.com/features/professional-edition/). The code helps automatize the serial processing of different scans of the same experimental setup when you want to compare the variation in time of DEMs and/or Orthophotos.
 
 To automatize the process it is necessary to first have one test scan running properly with Metashape and getting the results in the best possible way. Once you have the final values for the parameters, and the coordinates of your markers in the local coordinate system of the flume, you can start thinking about applying that configuration to all your future scans. By doing this, you assure that you will have results that are comparable and you can also use your time for other tasks while the computer runs independently.
 
