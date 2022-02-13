@@ -21,7 +21,7 @@ EXPERIMENT001
 │           metashape_workflow.py
 │           metashape_workflow_functions.py
 │           read_yaml.py
-│			run.py*
+│           run.py*
 │
 ├───PROCESSED**
 │   ├───output**
