@@ -537,15 +537,6 @@ def build_orthomosaics(doc, log_file, run_id, cfg):
     # what should the orthomosaic filename end in? e.g., DSM, DTM, USGS to indicate the surface it was built on
     file_ending = cfg["buildOrthomosaic"]["surface"]
 
-    # Import USGS DEM as surface for orthomosaic if specified
-    if cfg["buildOrthomosaic"]["surface"] == "USGS":
-        path = os.path.join(cfg["photo_path"],cfg["buildOrthomosaic"]["usgs_dem_path"])
-        crs = Metashape.CoordinateSystem(cfg["buildOrthomosaic"]["usgs_dem_crs"])
-        doc.chunk.importRaster(path=path,
-                               crs=crs,
-                               raster_type=Metashape.ElevationData)
-        build_export_orthomosaic(doc, log_file, run_id, cfg, file_ending = "USGS")
-
     # Otherwise use Metashape point cloud to build elevation model
     # DTM: use ground points only
     if (cfg["buildOrthomosaic"]["surface"] == "DTM") | (cfg["buildOrthomosaic"]["surface"] == "DTMandDSM"):
@@ -625,9 +616,11 @@ def SetBoundary(doc, cfg): # ADD OPTION FOR SETTING DEM WITH A POLYGON WHICH VER
         
         selected_coords = []
         
-        for i in range(0, 22):
+        cfg["importMarkers"]["rightlim"]
+
+        for i in range(0, (cfg["importMarkers"]["rightlim"]-1)):
             selected_coords.append(coords[i])
-        for i in range(43, 21, -1):
+        for i in range(cfg["importMarkers"]["lefttlim"]-1, 21, -1):
             selected_coords.append(coords[i])
         
 
