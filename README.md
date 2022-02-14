@@ -56,6 +56,7 @@ EXPERIMENT001
 ```
 
 **\***: file `run.py` is created automatically in Step 01.
+
 **\*\***: These folders are created when running the script `run.py`.
 
 ## Setup
