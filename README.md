@@ -60,7 +60,7 @@ EXPERIMENT001
 
 ## Setup
 
-Before start, it is necessary to install all the necessary software and packages:   
+Before start, you have to install all the necessary software and packages:   
 
 **Python:** You need Python (any version between 3.5 and 3.8[^1]). [Anaconda distribution](https://www.anaconda.com/distribution/) is recommended because it includes all the required libraries. When installing, if asked whether the installer should initialize Anaconda3, say "yes". Anaconda must be initialized upon install such that `python` can be called from the command line. A way to check is to simply enter `python` at your command prompt (CMD) and see if the resulting header info includes Anaconda and Python 3. If it doesn't, you may still need to initialize your Conda install.
 
