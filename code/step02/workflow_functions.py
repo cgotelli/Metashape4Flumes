@@ -255,7 +255,7 @@ def importReference(doc, cfg):
     doc.chunk.marker_crs = Metashape.CoordinateSystem(cfg["project_crs"])
     
     print('Detecting markers')
-    doc.chunk.detectMarkers(tolerance=30, filter_mask=False)
+    doc.chunk.detectMarkers(tolerance=50, filter_mask=False)
     
     doc.save()
 
