@@ -9,15 +9,12 @@ multispectral: False # Is this a multispectral photo set? If RGB, set to False.
 # project_path: "D:/SfM/PROCESSED/project_files"
 
 # The identifier for the run. Will be used in naming output files. Recommended to include a photoset name and processing parameter set name.
-run_name: "halle"
+run_name: "halle_resolutionTest"
 
 # CRS EPSG code that project outputs should be in (projection should be in meter units and intended for the project area)
 project_crs: 'LOCAL_CS["Local Coordinates (m)",LOCAL_DATUM["Local Datum",0],UNIT["metre",1,AUTHORITY["EPSG","9001"]]]' # 26910 is UTM 10N
 
-
-# Enable metashape "fine-level task subdivision" which reduces memory use by breaking processing into independent chunks that are run in series.
-# Assuming there's enough memory, it seems to run 10-20% faster by disabling subdividing. But large projects can run out memory and fail if subdivide is not enabled.
-subdivide_task: True
+subdivide_task: True # Enable metashape "fine-level task subdivision". Recommended: True 
 
 #### Processing parameters:
 ## Steps can be run or skipped using the 'enabled' parameter. If enabled == False, everything else in the step is irrelevant.
@@ -79,12 +76,12 @@ buildDem: # (Metashape: buildDem, exportRaster)
     tiff_tiled: False   # Recommended: False. Use tiled TIFF? This is related to internal file architecture.
     nodata: -32767      # Recommended: -32767. Value used to represent nodata.
     tiff_overviews: True # Recommended: True. Include coarse-scale raster data in file for quick display in GIS.
-    clip_to_boundary: True # Exporting DEMs and Orthophotos only within a defined shape or not.
+    clip_to_boundary: False # Exporting DEMs and Orthophotos only within a defined shape or not.
     boundaryMode: "Shape" # "Markers" or "Shape". Outer boundary made with markers or by a given shape previously defined (in *.shp format).
     
 
 buildOrthomosaic: # (Metashape: buildOrthomosaic, exportRaster)
-    enabled: False
+    enabled: True
     ## For building orthomosaic (buildOrthomosaic)
     surface: "DSM"         # Recommended: "DSM" (assuming a USGS DEM is available and GCPs with accurate elvevation data are being used). The surface to build the orthomosaic onto. "DTM", "DSM", "USGS", or "DTMandDSM. DTM and DSM refer to elevation models built by Metashape (buildDem step above) and stored in the project. If USGS, you must use GCPs with accurate elevations (ideally extracted from the USGS DEM).
     blending: Metashape.MosaicBlending # Recommended: Metashape.MosaicBlending. Photo blending mode. Options include AverageBlending, MosaicBlending, MinBlending, MaxBlending, DisabledBlending
