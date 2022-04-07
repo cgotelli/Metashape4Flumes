@@ -79,7 +79,7 @@ buildDem: # (Metashape: buildDem, exportRaster)
     tiff_tiled: False   # Recommended: False. Use tiled TIFF? This is related to internal file architecture.
     nodata: -32767      # Recommended: -32767. Value used to represent nodata.
     tiff_overviews: True # Recommended: True. Include coarse-scale raster data in file for quick display in GIS.
-    clip_to_boundary: False # Exporting DEMs and Orthophotos only within a defined shape or not.
+    clip_to_boundary: True # Exporting DEMs and Orthophotos only within a defined shape or not.
     boundaryMode: "Shape" # "Markers" or "Shape". Outer boundary made with markers or by a given shape previously defined (in *.shp format).
     
 
