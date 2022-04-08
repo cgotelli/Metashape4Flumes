@@ -6,6 +6,7 @@
 # 2021
 
 import sys
+import telegram # Install using the following command: pip install python-telegram-bot
 
 ## Load custom modules and config file: slightly different depending whether running interactively or via command line
 try:        # running interactively (in linux) or command line (windows)
@@ -14,6 +15,11 @@ try:        # running interactively (in linux) or command line (windows)
 except:     # running from command line (in linux) or interactively (windows)
     import workflow_functions as meta
     import read_yaml
+
+api_key = 'API KEY'
+user_id = 'YOUR USER ID'
+bot = telegram.Bot(token=api_key)
+
 
 config_file = sys.argv[1]
 
@@ -56,3 +62,5 @@ if cfg["buildOrthomosaic"]["enabled"]:
 meta.export_report(doc, run_id, cfg)
 
 meta.finish_run(log, config_file)
+
+bot.send_message(chat_id=user_id, text='We just finished the run: '+ run_id)

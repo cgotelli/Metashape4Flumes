@@ -255,7 +255,7 @@ def importReference(doc, cfg):
     doc.chunk.marker_crs = Metashape.CoordinateSystem(cfg["project_crs"])
     
     print('Detecting markers')
-    doc.chunk.detectMarkers(tolerance=30, filter_mask=False)
+    doc.chunk.detectMarkers(tolerance=50, filter_mask=False)
     
     doc.save()
 
@@ -579,7 +579,7 @@ def finish_run(log_file,config_file):
 
     # open run configuration again. We can't just use the existing cfg file because its objects had already been converted to Metashape objects (they don't write well)
     with open(config_file) as file:
-        config_full = yaml.load(file)
+        config_full = yaml.safe_load(file)
 
     # write the run configuration to the log file
     with open(log_file, 'a') as file:
