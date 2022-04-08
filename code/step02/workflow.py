@@ -6,7 +6,7 @@
 # 2021
 
 import sys
-import telegram
+import telegram # Install using the following command: pip install python-telegram-bot
 
 ## Load custom modules and config file: slightly different depending whether running interactively or via command line
 try:        # running interactively (in linux) or command line (windows)
