@@ -40,13 +40,13 @@ EXPERIMENT001
     │
     └───photos
         ├───scan01
-		photo001.jpg
-		photo002.jpg
-		...
+	|	photo001.jpg
+	|	photo002.jpg
+	|	...
         ├───scan02
-		photo001.jpg
-		photo002.jpg
-		...
+	|	photo001.jpg
+	|	photo002.jpg
+	|	...
         └───scan03
 		photo001.jpg
 		photo002.jpg
