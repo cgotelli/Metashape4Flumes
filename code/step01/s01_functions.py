@@ -27,21 +27,22 @@ def writeRunFile(fid, workflowPath, configPath):
 
     """
 
-    from os.path import join
+    from os.path import join, abspath
 
     fileout = join(workflowPath, "run.py")
     workflowPyPath = join(workflowPath, "workflow.py")
     if fid == 0:
-        print("hola")
+        print(workflowPyPath)
+        print(configPath)
         outfid = open(fileout, "w")
         outfid.write("import os" + "\n")
         outfid.write(
             (
-                "os.system('python"
+                "os.system(r'python"
                 + " "
-                + join(workflowPyPath)
+                + abspath(workflowPyPath)
                 + " "
-                + join(configPath)
+                + abspath(configPath)
                 + "'"
                 + ")"
                 + "\n"
@@ -52,11 +53,11 @@ def writeRunFile(fid, workflowPath, configPath):
         outfid = open(fileout, "a")
         outfid.write(
             (
-                "os.system('python"
+                "os.system(r'python"
                 + " "
-                + join(workflowPyPath)
+                + abspath(workflowPyPath)
                 + " "
-                + join(configPath)
+                + abspath(configPath)
                 + "'"
                 + ")"
                 + "\n"
@@ -91,21 +92,21 @@ def writeConfig(filein, fileout, subfolder, photoPath, outputPath, projectPath):
 
     """
 
-    from os.path import join
+    from os.path import abspath
 
     outfid = open(fileout, "wt")
 
     outfid.write(
-        ("main_path: " + '"' + join(photoPath) + '"' + "\n")
+        ("main_path: " + abspath(photoPath) + "\n")
     )  # the text you are adding at the beginning
     outfid.write(
-        ("subFolder: " + '"' + subfolder + '"' + "\n")
+        ("subFolder: " + subfolder + "\n")
     )  # the text you are adding at the beginning\
     outfid.write(
-        ("output_path: " + '"' + join(outputPath) + '"' + "\n")
+        ("output_path: " + abspath(outputPath) + "\n")
     )  # the text you are adding at the beginning\
     outfid.write(
-        ("project_path: " + '"' + join(projectPath) + '"' + "\n")
+        ("project_path: " + abspath(projectPath) + "\n")
     )  # the text you are adding at the beginning\
     outfid.close()
 
