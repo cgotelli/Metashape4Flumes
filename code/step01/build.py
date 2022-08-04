@@ -27,22 +27,24 @@ Created on Mon Jul 25 16:04:16 2022
 
 """
 import os
-from os.path import join, exists, basename
+from os.path import join, exists, basename, abspath
 from os import listdir, mkdir, rename, makedirs
 import s01_functions as s01
 import shutil
-
+import ntpath
 
 # -------------------- Parameters for processing ------------------------------
 
 originalPath = os.getcwd()
 
 # We specify the main path where folders with photos are stored (RAW/photos)
-filesPath = "/mnt/data1/GITHUB/Metashape4Flumes/EXPERIMENT001/RAW/photos/"  #'path/to/RAW/photos'
+filesPath = "F:\GOTELLI\Metashape4Flumes\EXPERIMENT001\RAW\photos"  #'path/to/RAW/photos'
+filesPath = abspath(filesPath)
 
 
 # We specify the path where configuration files are stored (RAW/config_common)
-configPath = "/mnt/data1/GITHUB/Metashape4Flumes/EXPERIMENT001/RAW/config_common/"
+configPath = "F:\GOTELLI\Metashape4Flumes\EXPERIMENT001\RAW\config_common"
+configPath = abspath(configPath)
 
 RunFilesPath = join(filesPath, "..", "runfiles")
 outputPath = join(filesPath, "..", "..", "PROCESSED", "output")
