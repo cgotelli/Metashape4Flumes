@@ -92,7 +92,7 @@ This step uses Python through the Anaconda Powershell Prompt in Windows. For MAC
 
 #### License 
 
-Before running the code, it is necessary to have a copy of your Metashape License file in the same path where you will run the code. For that, copy the file **license.lic** from `C:\Program Files\Agisoft\Metashape Pro` to the folder **CODE/step02**. You can do it directly by running the code `python metashape_license_setup.py` at the command prompt. If you're using the trial license **license_trial.lic**, you have to either edit the function ```metashape_license_setup.py``` or copy the license file manually to folder **CODE/step02**.
+Before running the code, it is necessary to have a copy of your Metashape License file in the same path where you will run the code. For that, copy the file **license.lic** from `C:\Program Files\Agisoft\Metashape Pro` to the folder **CODE/step02**. You can do it directly by running the code `python metashape_license_setup.py` at the command prompt. If you're using the trial license **license_trial.lic**, you have to either edit the function ```metashape_license_setup.py``` or copy the license file manually to folder **CODE/step02** and rename it as **license.lic**.
 
 ### Step 3. Analyze output
 
