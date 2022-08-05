@@ -100,5 +100,5 @@ Before running the code, it is necessary to have a copy of your Metashape Licens
 ### Step 3. Analyze output
 
 
-[^1]: Up to now it doesn't work with Python 3.9. 
+[^1]: Up to now (August, 2022) it doesn't work with Python 3.9. 
 [^2]: Future versions will work using only Python at command prompt.
