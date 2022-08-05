@@ -14,9 +14,8 @@ The entire process works with 3 subfolders inside one main folder: **CODE** (whe
 EXPERIMENT001
 ├───CODE
 │   ├───step01
-│   │       build.m
-│   │       writeConfig.m
-│   │       writeRunFile.m
+│   │       build.py
+│   │       s01_functions.py
 │   │
 │   └───step02
 │           metashape_license_setup.py
@@ -67,10 +66,8 @@ Before start, you have to install all the necessary software and packages:
 
 **Metashape:** You must install the Metashape Professional Edition and Metashape Python 3 module (version 1.8.1). Download the [current \*.whl file](https://www.agisoft.com/downloads/installer/) and install it following [these instructions](https://agisoft.freshdesk.com/support/solutions/articles/31000148930-how-to-install-metashape-stand-alone-python-module) (using the name of the .whl file that you downloaded). It can be used with the trial version of one month.
 
-**MATLAB[^2]:** Any basic version of Matlab is useful. No extra toolboxes are required.
-
 ## Usage  
-The process consists of two main steps: preparing the data, and processing it. The first step uses Matlab[^2] to get the required files and copy them into their correspondent subfolders inside the **RAW** folder. It also creates the `run.py` script, which will run the Metashape Python package over each subfolder containing the photos of different scans.
+The process consists of two main steps: preparing the data, and processing it. The first step gets the required files and copy them into their correspondent subfolders inside the **RAW** folder. It also creates the `run.py` script, which will run the Metashape Python package over each subfolder containing the photos of different scans.
 
 ### Step 1. Build  
 In the main folder (EXPERIMENT001 in the file tree above) you will have two folders:  
@@ -101,4 +98,3 @@ Before running the code, it is necessary to have a copy of your Metashape Licens
 
 
 [^1]: Up to now (August, 2022) it doesn't work with Python 3.9. 
-[^2]: Future versions will work using only Python at command prompt.
