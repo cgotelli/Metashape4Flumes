@@ -1,6 +1,9 @@
 # Derek Young and Alex Mandel
 # University of California, Davis
 # 2021
+# Last edited and adapted by Clemente Gotelli 
+# LHE-EPFL
+# 2022
 
 #### Import libraries
 
