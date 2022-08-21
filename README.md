@@ -95,7 +95,7 @@ This file is the base configuration for all the projects. It includes all the pa
 ### Step 2. Run
 
 This step uses Python through the Anaconda Powershell Prompt (Windows) or the terminal (UNIX). It is necessary to set the directory of the terminal/console in folder `EXPERIMENT001 > CODE > step02` and execute the following command: `python run.py`. 
-> :warning: Remember to set the as conda working environment the one where you have installed the Meashape API.
+> :warning: Remember to set as conda working environment the one where you have installed the Meashape API.
 
 #### License 
 
