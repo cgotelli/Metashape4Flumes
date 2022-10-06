@@ -61,9 +61,13 @@ EXPERIMENT001
 
 Before start, you have to install all the necessary software and packages:   
 
-**Python:** You need Python (any version between 3.5 and 3.8[^1]). [Anaconda distribution](https://www.anaconda.com/distribution/) is recommended because it includes most of the required libraries. When installing, if you are asked if the installer should initialize Anaconda3, say "yes". Anaconda must be initialized upon install such that `python` can be called from the command line. A way to check is to simply enter `python` at your command prompt (CMD) and see if the resulting header info includes Anaconda and Python 3. If it doesn't, you may still need to initialize your Conda install. 
+**Environment:** All the necessary packages can be installed with the file `metashape.yml`. For doing it we should execute in your terminal (UNIX OS) or Anaconda Command Prompt (Windows) the following command:
 
-**Telegram-bot:** We need also to install the Telegram package from the console by using the command: 'pip install python-telegram-bot'.
+```
+conda env create -f metashape.yml 
+```
+
+The only package that must be installed manually is Metashape API. 
 
 **Metashape:** You must install the Metashape Professional Edition and Metashape Python 3 module (version 1.8.1). Download the [current \*.whl file](https://www.agisoft.com/downloads/installer/) and install it following [these instructions](https://agisoft.freshdesk.com/support/solutions/articles/31000148930-how-to-install-metashape-stand-alone-python-module) (using the name of the .whl file that you downloaded). **It can be used with the trial version of one month.**
 
