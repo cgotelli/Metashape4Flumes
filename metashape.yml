@@ -200,7 +200,6 @@ dependencies:
     - apscheduler==3.6.3
     - backports-zoneinfo==0.2.1
     - cachetools==4.2.2
-    - metashape==1.8.4
     - python-telegram-bot==13.13
     - pytz-deprecation-shim==0.1.0.post0
     - tzdata==2022.1
