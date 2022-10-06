@@ -69,6 +69,8 @@ conda env create -f metashape.yml
 
 The only package that must be installed manually is Metashape API. 
 
+> ⚠️ To install Metashape API you must activate the Anaconda environment. For that use the following command: `conda activate metashape`
+
 **Metashape:** You must install the Metashape Professional Edition and Metashape Python 3 module (version 1.8.1). Download the [current \*.whl file](https://www.agisoft.com/downloads/installer/) and install it following [these instructions](https://agisoft.freshdesk.com/support/solutions/articles/31000148930-how-to-install-metashape-stand-alone-python-module) (using the name of the .whl file that you downloaded). **It can be used with the trial version of one month.**
 
 ## Usage  
