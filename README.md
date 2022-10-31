@@ -18,9 +18,9 @@ EXPERIMENT001
 │   │       s01_functions.py
 │   │
 │   └───step02
-│           metashape_license_setup.py
-│           metashape_workflow.py
-│           metashape_workflow_functions.py
+│           license_setup.py
+│           workflow.py
+│           workflow_functions.py
 │           read_yaml.py
 │           run.py*
 │
@@ -103,10 +103,16 @@ This file is the base configuration for all the projects. It includes all the pa
 This step uses Python through the Anaconda Powershell Prompt (Windows) or the terminal (UNIX). It is necessary to set the directory of the terminal/console in folder `EXPERIMENT001 > CODE > step02` and execute the following command: `python run.py`. 
 > :warning: Remember to set as conda working environment the one where you have installed the Meashape API.
 
+
 #### License 
 
 Before running the code, it is necessary to have a copy of your Metashape License file in the same path where you will run the code. For that, copy the file **license.lic** from `C:\Program Files\Agisoft\Metashape Pro` to the folder **CODE/step02**. You can do it directly by running the code `python metashape_license_setup.py` at the command prompt. If you're using the trial license **license_trial.lic**, you have to either edit the function ```metashape_license_setup.py``` or copy the license file manually to folder **CODE/step02** and rename it as **license.lic**.
 
-
+#### Telegram API
+In file `workflow.py` it is necessary to update the information of your notification bot, and your user id to allow the bot notify you about the end of the process.
+```python
+api_key = 'API KEY'
+user_id = 'YOUR USER ID'
+```
 
 [^1]: Up to now (August, 2022) it doesn't work with Python 3.9. 
