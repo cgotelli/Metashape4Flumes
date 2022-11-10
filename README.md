@@ -83,7 +83,8 @@ In the main folder (EXPERIMENT001 in the file tree above) you will have two fold
 1. You will copy the folder **CODE** from this repository into folder EXPERIMENT001, and
 2. You will make another folder inside called **RAW**. Inside this new folder you will create:
 	1. **photos**: Inside this folder you will put the pictures to process divided in subfolders: one for each scan.
-	2. **config_common**: This folder contains the files to use for configuring the Markers and coordinate system, and the outer boundary to have a regular shape as output for DEMs and Orthophotos (this makes comparison between files easier).
+	2. **config_common**: This folder contains the files to use for configuring the Markers and coordinate system, and the outer boundary to have a regular shape as output for DEMs and Orthophotos (this makes comparison between files easier). See below for details on what should be inside the *config_common* folder.
+3. Open the script `EXPERIMENT001/CODE/step01/build.py` with Spyder and modify it in the lines where it asks for the path to *photos* and *config_common* folders. This script will create new folders (one for each scan) with all the necessary files to run the corresponding Metashape project. It also creates the `run.py` file that will be executed in step02 that executes all Metashape projects in series.
 
 #### What should be inside the folder **RAW/config_common**?
 
