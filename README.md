@@ -71,7 +71,7 @@ There is only one package that must be installed manually: Metashape API.
 
 > ⚠️ To install the Metashape API you must first activate the Anaconda environment you just created. For doing that use the following command: `conda activate metashape`
 
-**Metashape:** You must install the Metashape Professional Edition and Metashape Python 3 module (version 1.8.1). Download the [current \*.whl file](https://www.agisoft.com/downloads/installer/) and install it following [these instructions](https://agisoft.freshdesk.com/support/solutions/articles/31000148930-how-to-install-metashape-stand-alone-python-module) (using the name of the .whl file that you downloaded). **It can be used with the trial version of one month.**
+**Metashape:** You must install the Metashape Professional Edition and Metashape Python 3 module (version 1.8.1). Download the [current \*.whl file](https://www.agisoft.com/downloads/installer/) and install it using this code: `pip install .\Metashape-1.8.4-cp35.cp36.cp37.cp38-none-win_amd64.whl` (replacing the name of the .whl file with the one of the file you downloaded). **It can be used with the trial version of one month.**
 
 ## Usage  
 The process consists of two main steps: preparing the data, and processing it. The postprocess is done with other codes, depending of what you want to analyze (see the [TTGA repository](https://github.com/cgotelli/DEM-ttga) for graph-theory analysis or [DEM-Iber](https://github.com/cgotelli/DEM-Iber/) to prepare the DEMs to simulate the flow with [Iber](https://iberaula.es/)). 
@@ -84,7 +84,7 @@ In the main folder (EXPERIMENT001 in the file tree above) you will have two fold
 2. You will make another folder inside called **RAW**. Inside this new folder you will create:
 	1. **photos**: Inside this folder you will put the pictures to process divided in subfolders: one for each scan.
 	2. **config_common**: This folder contains the files to use for configuring the Markers and coordinate system, and the outer boundary to have a regular shape as output for DEMs and Orthophotos (this makes comparison between files easier). See below for details on what should be inside the *config_common* folder.
-3. Open the script `EXPERIMENT001/CODE/step01/build.py` with Spyder and modify it in the lines where it asks for the path to *photos* and *config_common* folders. This script will create new folders (one for each scan) with all the necessary files to run the corresponding Metashape project. It also creates the `run.py` file that will be executed in step02 that executes all Metashape projects in series.
+3. Open the script `EXPERIMENT001/CODE/step01/build.py` with Spyder and modify it in the lines where it asks for the path to *photos* and *config_common* folders. This script will create new folders (one for each scan) with all the necessary files to run the corresponding Metashape project. It also creates the `run.py` file that will be run in step02 for executing all Metashape projects in series.
 
 #### What should be inside the folder **RAW/config_common**?
 
