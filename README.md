@@ -111,7 +111,7 @@ Before running the code, it is necessary to have a copy of your Metashape Licens
 
 #### Telegram API
 
-Also it is necessary to update the information of your Telegram notification bot. For that go to file `workflow.py` and replace there your Telegram user id and the API KEY of the telegram bot you created for notify you.  
+Also it is necessary to update the information of your Telegram notification bot. For that you have to install first Telegram in Python by using this code: `pip install python-telegram-bot`. Then, go to the file `workflow.py` and replace your Telegram user id and the API KEY of the telegram bot you created for notify you.  
 
 ```python
 api_key = 'API KEY'
